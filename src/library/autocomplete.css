@@ -1,0 +1,19 @@
+.autocomplete-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.autocomplete-container > label {
+  color: var(--color-dark-blue);
+  margin-bottom: 1rem;
+}
+
+.input-search {
+  height: 1.5rem;
+  width: 60%;
+  margin: 0 auto;
+  border: 1.5px solid var(--color-primary-ocean);
+  border-radius: 5px;
+  padding: 0.5rem;
+}
