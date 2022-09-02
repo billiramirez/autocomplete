@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 }
 
 .autocomplete-container > label {
@@ -11,9 +12,35 @@
 
 .input-search {
   height: 1.5rem;
-  width: 60%;
+  width: 220px;
   margin: 0 auto;
   border: 1.5px solid var(--color-primary-ocean);
   border-radius: 5px;
   padding: 0.5rem;
+}
+
+.data-list {
+  display: block;
+  position: relative;
+  background-color: white;
+  border: 1.5px solid var(--color-primary-ocean);
+  border-radius: 5px;
+  width: 220px;
+  padding: 10px;
+  left: 70px;
+  max-height: 100px;
+  top: 5px;
+  overflow: scroll;
+}
+
+option {
+  margin-bottom: 1px;
+  cursor: pointer;
+  color: var(--color-primary-ocean)
+}
+
+option:hover,
+.active {
+  background-color: var(--color-blue);
+  color: var(--color-super-light-blue);
 }

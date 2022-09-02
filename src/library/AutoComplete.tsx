@@ -27,21 +27,28 @@ const AutoComplete = ({
 }: Props) => {
   return (
     <div className="autocomplete-container">
-      <label htmlFor={label}>{label}</label>
+      <label htmlFor={listName}>{label}</label>
       <input
         type="text"
         id={name}
         placeholder={placeholder}
-        list={listName}
+        list={""}
         className={"input-search"}
+        onChange={onSearch}
+        onFocus={onSearch}
+        autoComplete="off"
+        name={listName}
+        value={value}
       />
-      <datalist id={listName}>
-        {list.map((item) => (
-          <option value={item.value} key={item.value}>
-            {item.label}
-          </option>
-        ))}
-      </datalist>
+      {value && (
+        <datalist id={listName} className="data-list">
+          {list.map((item) => (
+            <option value={item.label} key={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </datalist>
+      )}
     </div>
   );
 };
