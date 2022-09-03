@@ -122,9 +122,6 @@ const AutoComplete = ({
 
   const handleKeyChanges = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const key = event.key;
-    if (!entries.length) {
-      return;
-    }
 
     switch (key) {
       case Keys.ESC:
