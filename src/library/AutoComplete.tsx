@@ -132,7 +132,7 @@ const AutoComplete = ({
   ): { __html: string } => {
     const matchText = optionValue.replace(
       new RegExp(textToHighlight, "gi"),
-      (match) => `<h1>${match}</h1>`
+      (match) => `<mark>${match}</mark>`
     );
     return createHtml(matchText);
   };
