@@ -9,31 +9,42 @@ function App() {
   const [searchText, setSearchText] = useState<string>("");
   const [countries, setCountries] = useState<Country[]>([]);
   const debouceTimer = useRef<number | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!searchText.length) {
+      return;
+    }
     searchCountryByName(searchText).then((countries) =>
       setCountries(countries)
     );
   }, [searchText]);
 
   /**
-   * Use throtling strategy to avoid unnecessary hits to the api
+   * Use throtling strategy to avoid unnecessary hits to the api and improving performance
    */
 
   useEffect(() => {
-    debouceTimer.current = window.setInterval(() => {
+    debouceTimer.current = window.setTimeout(() => {
       setSearchText(debounceTerm);
     }, 500);
 
     return () => {
       if (debouceTimer.current) {
-        window.clearInterval(debouceTimer.current);
+        window.clearTimeout(debouceTimer.current);
       }
     };
   }, [debounceTerm]);
 
   const onSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === searchText) {
+      return;
+    }
     setDebounceTerm(e.target.value);
+  };
+
+  const onSelect = (value: string | null) => {
+    setSelectedCountry(value);
   };
 
   return (
@@ -51,6 +62,9 @@ function App() {
           placeholder={"Test this"}
           label={"Search Countries"}
           listName={"countries"}
+          onReset={() => setDebounceTerm("")}
+          onSelect={onSelect}
+          selected={selectedCountry}
         />
       </div>
     </div>

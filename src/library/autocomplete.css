@@ -33,14 +33,23 @@
   overflow: scroll;
 }
 
-option {
+.data-list > option {
   margin-bottom: 1px;
   cursor: pointer;
-  color: var(--color-primary-ocean)
+  color: var(--color-primary-ocean);
 }
 
-option:hover,
+.data-list > option:hover,
 .active {
   background-color: var(--color-blue);
   color: var(--color-super-light-blue);
+}
+
+.data-list > .active-match {
+  background-color: var(--color-blue);
+  color: var(--color-super-light-blue);
+}
+
+.data-list > p {
+  color: var(--color-primary-ocean);
 }
