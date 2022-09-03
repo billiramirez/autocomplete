@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# React Autcomplete Component
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Autocomplete React](https://res.cloudinary.com/billiramirez/image/upload/v1662215192/autocomplete_k9l38i.png)
 
-## Available Scripts
+## Autocomplete component built from scratch, using [ReactJS](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/)
 
-In the project directory, you can run:
+## Description
 
-### `npm start`
+For testing purpose on this component we are using a model of Countries. We we type in the name of the country we want to share and it will hit the endpoint to find any matching results.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to run the project
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Please make sure you follow the requisites below:
 
-### `npm test`
+- Nodejs Installed on your machine (v16.13.0 or higher)
+- Npm installed on your machine (8.1.0 or higher)
+- Any Code Editor of your choice
+- Terminal on your computer
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Install dependencies
 
-### `npm run build`
+Once you're set, please open the project and then open a terminal, run this following command:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+ npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Run the project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Please run the following command
 
-### `npm run eject`
+```bash
+  npm run start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This will open the port `:3000`, open your browser and go to this url: `http://localhost:3000`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Api Call Considerations
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Due to performance, I follow this approach of sending to the api endpoint the math text I want to find.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![Efficient Approach](https://res.cloudinary.com/billiramirez/image/upload/v1662216509/efficient-approach_a4z6pf.png)
 
-## Learn More
+> NOTE We could have done the filtering on the UI but this kind of operations are quite expensive on the client. For this example we have not too much data. But there could be cases where we have thousands of records. Fetching that amount of data upfront is not the best solutions.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+> But if we know this will fetch a little amount of data, yes we could have done the filtering on the UI. That's why you can find that approach in another branch of this repository. Called `data-upfront`
