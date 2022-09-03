@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./autocomplete.css";
 
 type ItemList = {
@@ -41,6 +41,7 @@ const AutoComplete = ({
   const [activeToHover, setActiveToHover] = useState<string | null>(null);
   const [activeMatchIdx, setActiveMatchIdx] = useState<number | null>(null);
   const [entries, setEntries] = useState<string[]>([]);
+  const itemsRef = useRef<Map<string, HTMLElement> | null>(null);
 
   useEffect(() => {
     const entries = list.map((listItem) => listItem.label);
@@ -48,6 +49,26 @@ const AutoComplete = ({
     setActiveMatchIdx(null);
     setActiveToHover(null);
   }, [list]);
+
+  function scrollToLabel(label: string) {
+    const map = getMap();
+    const node = map.get(label);
+    if (node) {
+      node.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }
+
+  function getMap(): Map<string, HTMLElement> {
+    if (!itemsRef.current) {
+      // Initialize the Map on first usage.
+      itemsRef.current = new Map<string, HTMLElement>();
+    }
+    return itemsRef.current;
+  }
 
   const handleESCKey = () => {
     onReset();
@@ -72,11 +93,13 @@ const AutoComplete = ({
     ) {
       setActiveMatchIdx(0);
       setActiveToHover(entries[0]);
+      scrollToLabel(entries[0]);
     } else if (activeMatchIdx !== entries.length - 1) {
       if (activeMatchIdx !== null) {
         const currentIdx = activeMatchIdx + 1;
         setActiveMatchIdx(currentIdx);
         setActiveToHover(entries[currentIdx]);
+        scrollToLabel(entries[currentIdx]);
       }
     }
   };
@@ -88,10 +111,12 @@ const AutoComplete = ({
       const idx = entries.length - 1;
       setActiveMatchIdx(idx);
       setActiveToHover(entries[idx]);
+      scrollToLabel(entries[idx]);
     } else if (activeMatchIdx !== 0) {
       const idx = activeMatchIdx - 1;
       setActiveMatchIdx(idx);
       setActiveToHover(entries[idx]);
+      scrollToLabel(entries[idx]);
     }
   };
 
@@ -163,6 +188,14 @@ const AutoComplete = ({
           {list.map((item) => {
             return (
               <option
+                ref={(node) => {
+                  const map = getMap();
+                  if (node) {
+                    map.set(item.label, node);
+                  } else {
+                    map.delete(item.label);
+                  }
+                }}
                 value={item.label}
                 key={item.value}
                 className={
