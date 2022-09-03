@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./autocomplete.css";
 
 type ItemList = {
@@ -40,14 +40,20 @@ const AutoComplete = ({
 }: Props) => {
   const [activeToHover, setActiveToHover] = useState<string | null>(null);
   const [activeMatchIdx, setActiveMatchIdx] = useState<number | null>(null);
+  const [entries, setEntries] = useState<string[]>([]);
 
-  const entries = useMemo(() => {
-    return list.map((listItem) => listItem.label);
+  useEffect(() => {
+    const entries = list.map((listItem) => listItem.label);
+    setEntries(entries);
+    setActiveMatchIdx(null);
+    setActiveToHover(null);
   }, [list]);
 
   const handleESCKey = () => {
     onReset();
     onSelect(null);
+    setActiveMatchIdx(null);
+    setActiveToHover(null);
   };
 
   const handleEnterKey = () => {
@@ -114,6 +120,23 @@ const AutoComplete = ({
     }
   };
 
+  const createHtml = (html: string) => {
+    return {
+      __html: html,
+    };
+  };
+
+  const optionValue = (
+    textToHighlight: string,
+    optionValue: string
+  ): { __html: string } => {
+    const matchText = optionValue.replace(
+      new RegExp(textToHighlight, "gi"),
+      (match) => `<h1>${match}</h1>`
+    );
+    return createHtml(matchText);
+  };
+
   return (
     <div className="autocomplete-container">
       <label htmlFor={listName}>{label}</label>
@@ -124,6 +147,7 @@ const AutoComplete = ({
         list={""}
         className={"input-search"}
         onChange={(e) => {
+          onSelect(null);
           onSearch(e);
         }}
         onKeyDown={handleKeyChanges}
@@ -144,11 +168,11 @@ const AutoComplete = ({
                 className={
                   activeToHover && activeToHover === item.label
                     ? "active-match"
-                    : ""
+                    : "match"
                 }
-              >
-                {item.label}
-              </option>
+                onClick={(e) => onSelect(item.label)}
+                dangerouslySetInnerHTML={optionValue(value, item.label)}
+              />
             );
           })}
           {value && !list.length && <p>No Result Found!</p>}
@@ -157,4 +181,5 @@ const AutoComplete = ({
     </div>
   );
 };
+
 export default AutoComplete;

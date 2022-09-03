@@ -15,6 +15,9 @@ function App() {
     if (!searchText.length) {
       return;
     }
+    /**
+     * Let's hit the API to search by text, leverage that logic to the api
+     */
     searchCountryByName(searchText).then((countries) =>
       setCountries(countries)
     );
@@ -37,13 +40,11 @@ function App() {
   }, [debounceTerm]);
 
   const onSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === searchText) {
-      return;
-    }
     setDebounceTerm(e.target.value);
   };
 
   const onSelect = (value: string | null) => {
+    setSelectedCountry(null);
     setSelectedCountry(value);
   };
 
@@ -59,7 +60,7 @@ function App() {
           value={debounceTerm}
           onSearch={onSearchText}
           name={"countries-search"}
-          placeholder={"Test this"}
+          placeholder={"Type in the name of the country"}
           label={"Search Countries"}
           listName={"countries"}
           onReset={() => setDebounceTerm("")}

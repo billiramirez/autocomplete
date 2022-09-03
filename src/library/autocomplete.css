@@ -27,7 +27,7 @@
   border-radius: 5px;
   width: 220px;
   padding: 10px;
-  left: 70px;
+  left: 45px;
   max-height: 100px;
   top: 5px;
   overflow: scroll;
@@ -39,6 +39,11 @@
   color: var(--color-primary-ocean);
 }
 
+.match >  mark {
+	color: white;
+  text-decoration: underline red;
+	background-color: black;
+}
 .data-list > option:hover,
 .active {
   background-color: var(--color-blue);
