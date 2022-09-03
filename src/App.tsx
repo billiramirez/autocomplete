@@ -8,8 +8,13 @@ function App() {
   const [debounceTerm, setDebounceTerm] = useState<string>("");
   const [searchText, setSearchText] = useState<string>("");
   const [countries, setCountries] = useState<Country[]>([]);
+  const [matchCountries, setMatchCountries] = useState<Country[]>([]);
   const debouceTimer = useRef<number | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+
+  useEffect(() => {
+    searchCountryByName("").then((countries) => setCountries(countries));
+  }, []);
 
   useEffect(() => {
     if (!searchText.length) {
@@ -18,10 +23,14 @@ function App() {
     /**
      * Let's hit the API to search by text, leverage that logic to the api
      */
-    searchCountryByName(searchText).then((countries) =>
-      setCountries(countries)
+    const foundCountries = countries.filter((country) =>
+      country.label
+        .trim()
+        .toLocaleLowerCase()
+        .includes(searchText.trim().toLocaleLowerCase())
     );
-  }, [searchText]);
+    setMatchCountries(foundCountries);
+  }, [searchText, countries]);
 
   /**
    * Use throtling strategy to avoid unnecessary hits to the api and improving performance
@@ -56,7 +65,7 @@ function App() {
       <div className="main-box">
         <h3>Search the Country You Want to Hire</h3>
         <AutoComplete
-          list={countries}
+          list={matchCountries}
           value={debounceTerm}
           onSearch={onSearchText}
           name={"countries-search"}
