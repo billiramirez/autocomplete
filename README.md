@@ -44,3 +44,19 @@ Due to performance, I follow this approach of sending to the api endpoint the ma
 > NOTE We could have done the filtering on the UI but this kind of operations are quite expensive on the client. For this example we have not too much data. But there could be cases where we have thousands of records. Fetching that amount of data upfront is not the best solutions.
 
 > But if we know this will fetch a little amount of data, yes we could have done the filtering on the UI. That's why you can find that approach in another branch of this repository. Called `data-upfront`
+
+## How to use
+
+This autocomplete uses mock data, which is a list of `Countries`. You can find that file in `src/api/mock-data.json`. We are using this data for searching and make the suggestions of the findings.
+
+> Note: This could use real API fetching, in the codebase you can find some comments on how start using real endpoints.
+
+Once you have the project running you can start using/testing the autocomplete, here some UX added to this component:
+
+- Start typing some country you want the component to suggest.
+- You can use the `arrow key up ⬆`.
+- You can use the `arrow key down ⬇`.
+- Hit `ENTER` key for selecting a value.
+- Hit `ESC` key for clearing up the autocomplete.
+- Select a suggestion `Cliking` over the country suggested.
+- Smooth scrolling using they `key up` and `key down` keys
